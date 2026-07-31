@@ -1,4 +1,5 @@
 {
+<<<<<<< Updated upstream
   "name": "pulsevote-frontend",
   "private": true,
   "version": "0.0.0",
@@ -21,5 +22,14 @@
     "@vitejs/plugin-react": "^6.0.3",
     "oxlint": "^1.71.0",
     "vite": "^8.1.1"
+=======
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.8.0"
+>>>>>>> Stashed changes
   }
 }

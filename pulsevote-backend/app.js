@@ -1,0 +1,56 @@
+const express = require('express');
+const cors = require('cors'); 
+const helmet = require('helmet'); 
+const dotenv = require('dotenv');
+const authRoutes = require("./routes/authRoutes");
+const cors = require('cors');
+dotenv.config();
+
+const app = express();
+
+app.use(helmet());
+app.use(cors()); 
+app.use(express.json());
+app.use("/api/auth", authRoutes);
+
+app.use(cors({
+  origin: "https://localhost:5173",
+  credentials: true
+}));
+
+app.use(
+helmet.contentSecurityPolicy({
+    directives: {
+    defaultSrc: ["'self'"],
+    scriptSrc: ["'self'", "https://apis.google.com"],
+    styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+    fontSrc: ["'self'", "https://fonts.gstatic.com"],
+    imgSrc: ["'self'", "data:"],
+    connectSrc: ["'self'", "http://localhost:5000"], // or whichever port you use
+    },
+})
+);
+
+const { protect } = require("./middleware/authMiddleware");
+
+app.get("/api/protected", protect, (req, res) => {
+  res.json({
+    message: `Welcome, user ${req.user.id}! You have accessed protected data.`,
+    timestamp: new Date()
+  });
+});
+
+// Existing route
+app.get('/', (req, res) => {
+    res.send('PulseVote API running!');
+});
+
+//New JSON endpoint
+app.get('/test', (req, res) => {
+    res.json({ 
+        message: "Hello from the PulseVote secure backend!", 
+        status: "Success" 
+    });
+});
+
+module.exports = app;
