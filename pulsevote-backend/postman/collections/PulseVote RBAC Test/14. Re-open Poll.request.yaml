@@ -1,0 +1,16 @@
+$kind: http-request
+url: "{{PROTOCOL}}://{{HOST}}:{{PORT}}/api/polls/open/{{POLL_ID}}"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "organisationId": "{{ORG_ID}}"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{MANAGER_TOKEN}}"
+order: 15000

@@ -1,0 +1,33 @@
+const express = require("express");
+const router = express.Router();
+const { protect } = require("../middleware/authMiddleware");
+const { requireRole } = require("../middleware/roleMiddleware");
+
+const {
+  createPoll,
+  getOrgPolls,
+  votePoll,
+  getPollResults,
+  closePoll,
+  openPoll
+} = require("../controllers/pollController");
+
+// Request 9 in Postman
+router.post("/create-poll", protect, requireRole("manager"), createPoll);
+
+// Request 10 in Postman
+router.get("/get-polls/:organisationId", protect, getOrgPolls);
+
+// Request 11 in Postman
+router.post("/vote/:pollId", protect, requireRole("user"), votePoll);
+
+// Request 12 in Postman
+router.get("/get-poll-results/:pollId", protect, getPollResults);
+
+// Request 13 in Postman
+router.post("/close/:pollId", protect, requireRole("manager"), closePoll);
+
+// Request 14 in Postman
+router.post("/open/:pollId", protect, requireRole("manager"), openPoll);
+
+module.exports = router;

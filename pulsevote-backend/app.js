@@ -3,6 +3,8 @@ const cors = require('cors');
 const helmet = require('helmet'); 
 const dotenv = require('dotenv');
 const authRoutes = require("./routes/authRoutes");
+const organisationRoutes = require("./routes/organisationRoutes");
+const pollRoutes = require("./routes/pollRoutes");
 const cors = require('cors');
 dotenv.config();
 
@@ -12,6 +14,8 @@ app.use(helmet());
 app.use(cors()); 
 app.use(express.json());
 app.use("/api/auth", authRoutes);
+app.use("/api/organisations", organisationRoutes);
+app.use("/api/polls", pollRoutes);
 
 app.use(cors({
   origin: "https://localhost:5173",

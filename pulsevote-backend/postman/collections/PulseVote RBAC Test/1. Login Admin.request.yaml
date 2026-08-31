@@ -1,0 +1,20 @@
+$kind: http-request
+url: "{{PROTOCOL}}://{{HOST}}:{{PORT}}/api/auth/login"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "email": "{{ADMIN_EMAIL}}",
+      "password": "{{ADMIN_PASSWORD}}"
+    }
+scripts:
+  - type: afterResponse
+    code: |-
+      const res = pm.response.json();
+      pm.collectionVariables.set('ADMIN_TOKEN', res.token);
+      // Optional: pm.collectionVariables.set('ADMIN_ID', res.userId || res.id);
+    language: text/javascript
+order: 2000

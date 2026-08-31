@@ -1,0 +1,16 @@
+$kind: http-request
+url: "{{PROTOCOL}}://{{HOST}}:{{PORT}}/api/organisations/join-organisation"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "joinCode": "{{JOIN_CODE}}"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{USER_TOKEN}}"
+order: 8000

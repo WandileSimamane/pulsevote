@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{PROTOCOL}}://{{HOST}}:{{PORT}}/api/auth/register-admin"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "email": "{{ADMIN_EMAIL}}",
+      "password": "{{ADMIN_PASSWORD}}"
+    }
+order: 1000

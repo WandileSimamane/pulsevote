@@ -1,0 +1,11 @@
+$kind: http-request
+url: "{{PROTOCOL}}://{{HOST}}:{{PORT}}/api/polls/get-poll-results/{{POLL_ID}}"
+method: GET
+headers:
+  Content-Type: application/json
+auth:
+  type: bearer
+  credentials:
+    token: "{{MANAGER_TOKEN}}"
+settings: {}
+order: 13000

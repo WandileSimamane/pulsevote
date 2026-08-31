@@ -1,0 +1,19 @@
+$kind: http-request
+url: "{{PROTOCOL}}://{{HOST}}:{{PORT}}/api/organisations/generate-join-code/{{ORG_ID}}"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: ""
+auth:
+  type: bearer
+  credentials:
+    token: "{{MANAGER_TOKEN}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      const res = pm.response.json();
+      pm.collectionVariables.set('JOIN_CODE', res.joinCode || res.code || (res.data && res.data.joinCode));
+    language: text/javascript
+order: 9000

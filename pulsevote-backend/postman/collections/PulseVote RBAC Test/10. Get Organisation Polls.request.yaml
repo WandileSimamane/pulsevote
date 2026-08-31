@@ -1,0 +1,15 @@
+$kind: http-request
+url: "{{PROTOCOL}}://{{HOST}}:{{PORT}}/api/polls/get-polls/{{ORG_ID}}"
+method: GET
+auth:
+  type: bearer
+  credentials:
+    token: "{{MANAGER_TOKEN}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      const res = pm.response.json();
+      if (Array.isArray(res) && res.length) { pm.collectionVariables.set('POLL_ID', res[0]._id || res[0].id); }
+      if (res && res.polls && res.polls.length) { pm.collectionVariables.set('POLL_ID', res.polls[0]._id || res.polls[0].id); }
+    language: text/javascript
+order: 11000

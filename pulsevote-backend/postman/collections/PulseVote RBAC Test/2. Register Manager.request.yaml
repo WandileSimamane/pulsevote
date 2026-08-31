@@ -1,0 +1,17 @@
+$kind: http-request
+url: "{{PROTOCOL}}://{{HOST}}:{{PORT}}/api/auth/register-manager"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "email": "{{MANAGER_EMAIL}}",
+      "password": "{{MANAGER_PASSWORD}}"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{ADMIN_TOKEN}}"
+order: 3000

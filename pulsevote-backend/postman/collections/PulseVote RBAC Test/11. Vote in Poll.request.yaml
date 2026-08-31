@@ -1,0 +1,16 @@
+$kind: http-request
+url: "{{PROTOCOL}}://{{HOST}}:{{PORT}}/api/polls/vote/{{POLL_ID}}"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "optionIndex": {{OPTION_INDEX}}
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{USER_TOKEN}}"
+order: 12000

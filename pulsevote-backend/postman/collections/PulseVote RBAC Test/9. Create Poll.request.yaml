@@ -1,0 +1,24 @@
+$kind: http-request
+url: "{{PROTOCOL}}://{{HOST}}:{{PORT}}/api/polls/create-poll"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "organisationId": "{{ORG_ID}}",
+      "question": "{{POLL_QUESTION}}",
+      "options": {{POLL_OPTIONS}}
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{MANAGER_TOKEN}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      const res = pm.response.json();
+      pm.collectionVariables.set('POLL_ID', res._id || res.id);
+    language: text/javascript
+order: 10000

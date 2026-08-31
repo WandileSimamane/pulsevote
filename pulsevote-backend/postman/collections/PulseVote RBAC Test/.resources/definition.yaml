@@ -1,0 +1,22 @@
+$kind: collection
+description: Add the values for the usernames and so on. If your API is configured correctly, and runs at the relevant ports, all tests should run in postman
+variables:
+  PROTOCOL: https
+  HOST: localhost
+  PORT: "5000"
+  ADMIN_EMAIL: admin@pulsevote.com
+  ADMIN_PASSWORD: Password@123
+  MANAGER_EMAIL: manager@pulsevote.com
+  MANAGER_PASSWORD: Password@124
+  USER_EMAIL: user@pulsevote.com
+  USER_PASSWORD: Password@125
+  ORG_NAME: INSY7314
+  OPTION_INDEX: "1"
+  POLL_QUESTION: What's your favourite programming language?
+  POLL_OPTIONS: '["JavaScript", "Python", "C#"]'
+  ADMIN_TOKEN: ""
+  MANAGER_TOKEN: ""
+  USER_TOKEN: ""
+  ORG_ID: ""
+  JOIN_CODE: ""
+  POLL_ID: ""

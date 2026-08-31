@@ -1,0 +1,21 @@
+const express = require("express");
+const router = express.Router();
+const { protect } = require("../middleware/authMiddleware");
+const { requireRole } = require("../middleware/roleMiddleware");
+
+const {
+  createOrganisation,
+  joinOrganisation,
+  generateJoinCode
+} = require("../controllers/organisationController");
+
+// Request 4 in Postman
+router.post("/create-organisation", protect, requireRole("manager"), createOrganisation);
+
+// Request 7 in Postman
+router.post("/join-organisation", protect, requireRole("user"), joinOrganisation);
+
+// Request 8 in Postman
+router.post("/generate-join-code/:organisationId", protect, requireRole("manager"), generateJoinCode);
+
+module.exports = router;

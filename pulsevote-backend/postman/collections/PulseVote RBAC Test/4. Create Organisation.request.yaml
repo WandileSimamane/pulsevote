@@ -1,0 +1,29 @@
+$kind: http-request
+url: "{{PROTOCOL}}://{{HOST}}:{{PORT}}/api/organisations/create-organisation"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "name": "{{ORG_NAME}}"
+    }
+auth:
+  type: bearer
+  credentials:
+    token: "{{MANAGER_TOKEN}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      const res = pm.response.json();
+      if (res.organisation && res.organisation._id) {
+          pm.collectionVariables.set('ORG_ID', res.organisation._id);
+      }
+      if (res.organisation && res.organisation.joinCode) {
+          pm.collectionVariables.set('JOIN_CODE', res.organisation.joinCode);
+      }
+      console.log('Organisation ID:', pm.collectionVariables.get('ORG_ID'));
+      console.log('Join Code:', pm.collectionVariables.get('JOIN_CODE'));
+    language: text/javascript
+order: 5000

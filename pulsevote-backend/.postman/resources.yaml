@@ -2,6 +2,10 @@
 workspace:
   id: 3bab0e5f-ec35-499d-8287-12bbf8f7dbb9
 
+cloudResources:
+  collections:
+    ../postman/collections/PulseVote RBAC Test: 69d970b5-f9d0-4393-b20d-b285b49143da
+
 # All resources in the `postman/` folder are automatically registered in Local View.
 # Point to additional files outside the `postman/` folder to register them individually. Example:
 #localResources:
