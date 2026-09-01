@@ -1,10 +1,18 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt"); // (If you eventually get a bcrypt error, we will change this to bcryptjs)
 
 const roleSchema = new mongoose.Schema(
   {
-    organisationId: { type: mongoose.Schema.Types.ObjectId, ref: "Organisation" },
-    role: { type: String, enum: ["admin", "manager", "user"], required: true }
+    organisationId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Organisation",
+      default: null
+    },
+    role: {
+      type: String,
+      enum: ["admin", "manager", "user"],
+      required: true
+    }
   },
   { _id: false }
 );
@@ -15,20 +23,15 @@ const userSchema = new mongoose.Schema({
   roles: [roleSchema]
 });
 
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
-  
-  try {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-    next();
-  } catch (err) {
-    next(err);
-  }
+// Modern Mongoose Pre-Save Hook (No 'next' callback needed)
+userSchema.pre("save", async function () {
+  if (!this.isModified("password")) return;
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
 });
 
 userSchema.methods.comparePassword = async function (candidatePassword) {
-  return bcrypt.compare(candidatePassword, this.password);
+  return await bcrypt.compare(candidatePassword, this.password);
 };
 
 module.exports = mongoose.model("User", userSchema);

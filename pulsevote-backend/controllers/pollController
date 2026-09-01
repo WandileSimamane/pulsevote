@@ -104,13 +104,18 @@ try {
 };
 
 exports.getOrgPolls = async (req, res) => {
-try {
+  try {
     const { organisationId } = req.params;
+    if (!organisationId) {
+      return res.status(400).json({ message: "Organisation ID is required" });
+    }
+
     const polls = await Poll.find({ organisationId });
-    res.json(polls);
-} catch (err) {
-    res.status(500).json({ error: "Server error" });
-}
+    return res.status(200).json(polls);
+  } catch (err) {
+    console.error("GET ORG POLLS ERROR:", err);
+    return res.status(500).json({ error: "Server error: " + err });
+  }
 };
 
 exports.closePoll = async (req, res) => {
