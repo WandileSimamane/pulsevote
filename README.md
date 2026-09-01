@@ -45,3 +45,7 @@ Once both servers are running, hold Ctrl and click the https://localhost:5173/ l
 
 Note on Browser Security Warnings:
 Because this local development environment uses self-signed SSL certificates, your browser will likely display a "Connection is not private" or "Potential Security Risk" warning. This is expected. Click Advanced and select Proceed to localhost (unsafe) to access the app.
+
+## Activity 07: Role-Based Access Control (RBAC) Summary
+
+Role-Based Access Control (RBAC) is an authorization mechanism that restricts system access based on assigned user roles and privileges. In modern web applications, RBAC ensures the principle of least privilege, preventing regular users from executing sensitive administrative operations. In PulseVote, Admins manage platform roles, Managers oversee organizations and polls, and regular Users are restricted to joining organizations and submitting votes. Without robust RBAC enforcement, unauthorized privilege escalation can expose protected data, as seen in real-world breaches like the Optus 2022 API incident where improper authorization controls allowed unauthenticated data harvesting. Implementing strict route middleware and controller checks ensures secure, role-segmented operations across the entire application.
