@@ -2,6 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const https = require('https');
+const fs = require('fs');
+const path = require('path');
 
 dotenv.config();
 
@@ -25,7 +28,7 @@ app.use('/api/polls', pollRoutes);
 
 // Base Route
 app.get('/', (req, res) => {
-  res.send('PulseVote API is running...');
+  res.send('PulseVote API is running securely...');
 });
 
 // Protected Test Route
@@ -38,14 +41,20 @@ app.get("/api/protected", protect, (req, res) => {
   });
 });
 
-// Database Connection & Standard HTTP Server Start
+// Database Connection & Secure HTTPS Server Start
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log('Successfully connected to MongoDB Atlas.');
     
-    app.listen(PORT, () => {
-      console.log(`Server running at http://localhost:${PORT}`);
+    // Updated to match the key.pem and cert.pem files in your ssl folder
+    const sslOptions = {
+      key: fs.readFileSync(path.join(__dirname, 'ssl', 'key.pem')),
+      cert: fs.readFileSync(path.join(__dirname, 'ssl', 'cert.pem'))
+    };
+
+    https.createServer(sslOptions, app).listen(PORT, () => {
+      console.log(`Secure server running at https://localhost:${PORT}`);
     });
   })
   .catch((err) => {
